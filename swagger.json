@@ -1,0 +1,184 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API-POINTAGE",
+    "description": "",
+    "version": "1.0"
+  },
+  "definitions": {
+    "headers": {
+      "type": "object",
+      "properties": {
+        "x-api-key": {
+          "type": "String"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "user_username": {
+          "type": "String"
+        },
+        "user_password": {
+          "type": "String"
+        },
+        "user_role": {
+          "type": "String"
+        },
+        "user_etat": {
+          "type": "String"
+        },
+        "user_departement_id": {
+          "type": "Integer"
+        }
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "properties": {
+        "user_username": {
+          "type": "String"
+        },
+        "user_password": {
+          "type": "String"
+        }
+      }
+    },
+    "UserLoginResponseSuccess": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "String"
+        },
+        "token": {
+          "type": "String"
+        },
+        "status": {
+          "type": "String"
+        },
+        "user_username": {
+          "type": "String"
+        }
+      }
+    },
+    "UserLoginResponseError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "String"
+        },
+        "status": {
+          "type": "String"
+        }
+      }
+    },
+    "meResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "String"
+        },
+        "status": {
+          "type": "String"
+        }
+      }
+    },
+    "addUserSuccess":{
+      "type": "object",
+      "properties":{
+        "message:":{
+          "type":"String"
+        }
+      }
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/UserLoginResponseSuccess"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/UserLoginResponseError"
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": [],
+        "produces": [
+          "application/json",
+          "x-api-key"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/meResponse"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses":{
+          "200":{
+            "description": "ok",
+            "schema":{}
+          }
+        }
+      }
+    }
+  }
+}
