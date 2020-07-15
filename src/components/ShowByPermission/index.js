@@ -1,5 +1,5 @@
 import React from 'react'
-import { roleCan } from '../role'
+import { roleCan } from '../../helpers/role'
 
 const ShowByPermission = ({can,children}) => {
 

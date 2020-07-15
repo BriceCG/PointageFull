@@ -3,7 +3,7 @@ import {
   FIRE_LOGIN_REQUEST,
   FIRE_LOGIN_SUCCESS
 } from './userLoginTypes';
-import axios from 'axios';
+import { axiosBase  } from '../../helpers/axiosBase'
 
 // do  request to the api
 export const fireLoginRequest = ()=>{
@@ -34,7 +34,7 @@ export const fireLoginFailure = (errorMsg)=>{
 export const fireLogin = (dataWithProps)=>{
   return (dispatch)=>{
     dispatch(fireLoginRequest());
-    axios.post('http://localhost:4000/login',dataWithProps.user)
+    axiosBase.post('/login',dataWithProps.user)
     .then( success=>{
       const token = success.data.token
       dispatch(fireLoginSuccess(success))

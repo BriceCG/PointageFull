@@ -3,7 +3,7 @@ import {
   FETCH_PRESENCE_REQUEST,
   FETCH_PRESENCE_SUCCESS
 } from './userPresenceTypes'
-import axios from 'axios';
+import { axiosBase } from '../../helpers/axiosBase'
 
 export const fetchPresenceRequest = ()=>{
   return{
@@ -30,9 +30,9 @@ export const fetchPresence = ()=>{
   return (dispatch)=>{
     dispatch(fetchPresenceRequest())
     const token = window.localStorage.getItem('token')
-    axios({
+    axiosBase({
       method: 'GET',
-      url: 'http://localhost:4000/presences',
+      url: '/presences',
       headers:{
         'x-api-key': token 
       }

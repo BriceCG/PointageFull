@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { fetchUser,getUniqUser,getIdUserUpdate,removeMessage,getRole } from '../../../redux'
-import axios from 'axios';
 import Button from '../../SousComponents/Button';
 import ShowByPermission from '../../ShowByPermission';
+import { axiosBase  } from '../../../helpers/axiosBase'
 
 
 // table user
@@ -43,9 +43,7 @@ const ListUser = (props) => {
   useEffect( ()=>{
     dispatch(fetchUser())
     const token = window.localStorage.getItem('token')
-    axios({
-      method: 'GET',
-      url: 'http://localhost:4000/me',
+    axiosBase.get('/me',{
       headers:{
         'x-api-key': token 
       }
@@ -68,19 +66,6 @@ const ListUser = (props) => {
   }
 
 
-  const test = ()=>{
-    const data={
-      user_username: 'moffdsfsdfdfdsfsdsdfsddfsmota',
-      user_role: 'blabla',
-      user_etat: 'blabla',
-      user_password: 'dfsdsf'
-    }
-    axios.put('http://localhost:4000/user/39',data)
-    .then(succ=>{
-      dispatch(fetchUser())
-    })
-    .catch(err=>console.log(err.response.data.message))
-  }
 
   // si loading true et tableau user vide retourne null
   
