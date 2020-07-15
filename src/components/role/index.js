@@ -1,5 +1,5 @@
 export const roleCan = [
-  'admin',
+  'chef',
   'drh',
-  'dg'
+  
 ]

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { fetchUser,getUniqUser,getIdUserUpdate,removeMessage } from '../../../redux'
+import { fetchUser,getUniqUser,getIdUserUpdate,removeMessage,getRole } from '../../../redux'
 import axios from 'axios';
 import Button from '../../SousComponents/Button';
 import ShowByPermission from '../../ShowByPermission';
@@ -16,7 +16,9 @@ const TableBody = props=>{
           <th>Username</th>
           <th>Password</th>
           <th>Role</th>
-          <th>Update</th>
+          <ShowByPermission can={props.role}>
+            <th>Update</th>
+          </ShowByPermission>
          
         </tr>
         </thead>
@@ -34,12 +36,29 @@ const TableBody = props=>{
 const ListUser = (props) => {
   const { users,loading,openModal } = props
   const user = useSelector(state => state.user)
+  const [role, setRole] = useState('')
   const dispatch = useDispatch()
   const [userList, setUserList] = useState([])
 
   useEffect( ()=>{
     dispatch(fetchUser())
-  },[])
+    const token = window.localStorage.getItem('token')
+    axios({
+      method: 'GET',
+      url: 'http://localhost:4000/me',
+      headers:{
+        'x-api-key': token 
+      }
+    })
+    .then( response=>{
+      setRole(response.data.user.user_role.toLocaleLowerCase()) 
+      
+    })
+    .catch(error=>{
+      console.log(error) 
+    })
+    
+  },[role])
 
   const getUser = (id)=>{
     dispatch(getUniqUser(id))
@@ -74,7 +93,7 @@ const ListUser = (props) => {
         
         <td>
           {/* <Button value="update" action={()=>getUser(user.id)} /> */}
-          <ShowByPermission can="visiteur">
+          <ShowByPermission can={role}>
             <Button value="update" action={()=>getUser(user.id)} />
           </ShowByPermission>
         </td>
@@ -89,7 +108,7 @@ const ListUser = (props) => {
   return (
     <div>
        <h2>List of User</h2>
-      {showUserList ? <TableBody showUserList={showUserList} openModal={openModal} /> : <h3>Loading ....</h3>}
+      {showUserList ? <TableBody role={role} showUserList={showUserList} openModal={openModal} /> : <h3>Loading ....</h3>}
      
     </div>
   )
