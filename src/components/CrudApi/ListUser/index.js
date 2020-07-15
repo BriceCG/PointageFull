@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { fetchUser,getUniqUser,getIdUserUpdate } from '../../../redux'
+import { fetchUser,getUniqUser,getIdUserUpdate,removeMessage } from '../../../redux'
 import axios from 'axios';
-import './../index.css';
 import Button from '../../SousComponents/Button';
+import ShowByPermission from '../../ShowByPermission';
 
 
 // table user
@@ -44,6 +44,7 @@ const ListUser = (props) => {
   const getUser = (id)=>{
     dispatch(getUniqUser(id))
     dispatch(getIdUserUpdate(id))
+    dispatch(removeMessage())
     openModal()
   }
 
@@ -71,7 +72,12 @@ const ListUser = (props) => {
         <td>{user.user_password}</td>
         <td>{user.user_role}</td>
         
-        <td><Button value="update" action={()=>getUser(user.id)} /></td>
+        <td>
+          {/* <Button value="update" action={()=>getUser(user.id)} /> */}
+          <ShowByPermission can="visiteur">
+            <Button value="update" action={()=>getUser(user.id)} />
+          </ShowByPermission>
+        </td>
         
       </tr>
   )))

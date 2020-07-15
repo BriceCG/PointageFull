@@ -2,7 +2,8 @@ import {
   MAKE_USER_UPDATE_FAILURE,
   MAKE_USER_UPDATE_REQUEST,
   MAKE_USER_UPDATE_SUCCESS,
-  GET_USER_ID_UPADTE
+  GET_USER_ID_UPADTE,
+  REMOVE_MESSAGE
 } from './userUpdateTypes'
 import axios from 'axios'
 import { fetchUser } from '../../redux'
@@ -58,4 +59,12 @@ return{
   payload: id
 }
 
+}
+
+// remove message
+
+export const removeMessage = ()=>{
+  return{
+    type: REMOVE_MESSAGE
+  }
 }

@@ -5,7 +5,7 @@ import Error from '../Error';
 
 const Message = (props) => {
   const {success,error} = props
-  console.log('main',success)
+  // console.log('main',success)
  if(success.message)
     return <Success success={props.success.message} />  
   else if(error.message)

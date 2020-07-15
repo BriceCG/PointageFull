@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fireLogin } from '../../redux';
-import './index.css';
 
 import Button from '../SousComponents/Button';
 
@@ -33,7 +32,12 @@ export class Login extends Component {
   }
 
 componentDidMount() {
-  console.log('mount')
+ 
+  const token = window.localStorage.getItem('token')
+  if(token){
+    // console.log('token available')
+    this.props.history.push('/dashboard')
+  }
 }
 
 
@@ -54,9 +58,6 @@ componentDidMount() {
     this.props.fireLogin(dataWithProps)
     
   }
-
-  // validate form
-
 
 
 
@@ -89,7 +90,7 @@ componentDidMount() {
               <input type="password" onChange={this.handleChange} placeholder="password" id="user_password" value={user_password} />
             </div>
             
-          {showBtn}
+          { userLogin.loading ? 'loading ...' : showBtn}
            
     
           </form>
