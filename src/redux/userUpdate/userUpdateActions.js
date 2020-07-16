@@ -2,9 +2,10 @@ import {
   MAKE_USER_UPDATE_FAILURE,
   MAKE_USER_UPDATE_REQUEST,
   MAKE_USER_UPDATE_SUCCESS,
-  GET_USER_ID_UPADTE
+  GET_USER_ID_UPADTE,
+  REMOVE_MESSAGE
 } from './userUpdateTypes'
-import axios from 'axios'
+import { axiosBase } from '../../helpers/axiosBase'
 import { fetchUser } from '../../redux'
 
 
@@ -36,7 +37,7 @@ export const makeUserUpdateFailure = (errorMsg)=>{
 export const makeUserUpdate = (id,data)=>{
   return (dispatch)=>{
     dispatch(makeUserUpdateRequest())
-    axios.put('http://localhost:4000/user/'+id,data)
+    axiosBase.put('http://localhost:4000/user/'+id,data)
     .then(response=>{
       const successMsg = response.data
       dispatch(makeUserUpdateSuccess(successMsg))
@@ -58,4 +59,12 @@ return{
   payload: id
 }
 
+}
+
+// remove message
+
+export const removeMessage = ()=>{
+  return{
+    type: REMOVE_MESSAGE
+  }
 }

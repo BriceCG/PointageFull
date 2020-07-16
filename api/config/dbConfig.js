@@ -1,9 +1,9 @@
 module.exports = {
     HOST: "localhost",
 
-    USER: "brice",
+    USER: "root",
 
-    PASSWORD: "123456",
+    PASSWORD: "",
 
     DB: "api_pointage",
 

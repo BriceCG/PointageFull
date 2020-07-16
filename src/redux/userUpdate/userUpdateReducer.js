@@ -2,7 +2,8 @@ import {
   MAKE_USER_UPDATE_FAILURE,
   MAKE_USER_UPDATE_REQUEST,
   MAKE_USER_UPDATE_SUCCESS,
-  GET_USER_ID_UPADTE
+  GET_USER_ID_UPADTE,
+  REMOVE_MESSAGE
 } from './userUpdateTypes'
 
 const initialState = {
@@ -38,6 +39,12 @@ const initialState = {
       return{
         ...state,
         idUserUpdate: action.payload
+      }
+    case REMOVE_MESSAGE: 
+      return{
+        ...state,
+        successUpdateMsg: '',
+        errorUpdateMsg: ''
       }
     default: 
       return state

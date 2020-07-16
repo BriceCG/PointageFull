@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 const Button = (props) => {
   const { type,disabled,value,action } = props
   return (
-    <button type={type} disabled={disabled} onClick={action}>
+    <button style={{background: '#4e4779',color: 'white'}} className="btn btn-block submitLogin" type={type} disabled={disabled} onClick={action}>
       {value}
     </button>
   )

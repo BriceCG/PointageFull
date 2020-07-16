@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { fetchUser,getUniqUser,getIdUserUpdate } from '../../../redux'
-import axios from 'axios';
-import './../index.css';
+import { fetchUser,getUniqUser,getIdUserUpdate,removeMessage,getRole } from '../../../redux'
 import Button from '../../SousComponents/Button';
+import ShowByPermission from '../../ShowByPermission';
+import { axiosBase  } from '../../../helpers/axiosBase'
 
 
 // table user
@@ -16,7 +16,9 @@ const TableBody = props=>{
           <th>Username</th>
           <th>Password</th>
           <th>Role</th>
-          <th>Update</th>
+          <ShowByPermission can={props.role}>
+            <th>Update</th>
+          </ShowByPermission>
          
         </tr>
         </thead>
@@ -34,33 +36,36 @@ const TableBody = props=>{
 const ListUser = (props) => {
   const { users,loading,openModal } = props
   const user = useSelector(state => state.user)
+  const [role, setRole] = useState('')
   const dispatch = useDispatch()
   const [userList, setUserList] = useState([])
 
   useEffect( ()=>{
     dispatch(fetchUser())
-  },[])
+    const token = window.localStorage.getItem('token')
+    axiosBase.get('/me',{
+      headers:{
+        'x-api-key': token 
+      }
+    })
+    .then( response=>{
+      setRole(response.data.user.user_role.toLocaleLowerCase()) 
+      
+    })
+    .catch(error=>{
+      console.log(error) 
+    })
+    
+  },[role])
 
   const getUser = (id)=>{
     dispatch(getUniqUser(id))
     dispatch(getIdUserUpdate(id))
+    dispatch(removeMessage())
     openModal()
   }
 
 
-  const test = ()=>{
-    const data={
-      user_username: 'moffdsfsdfdfdsfsdsdfsddfsmota',
-      user_role: 'blabla',
-      user_etat: 'blabla',
-      user_password: 'dfsdsf'
-    }
-    axios.put('http://localhost:4000/user/39',data)
-    .then(succ=>{
-      dispatch(fetchUser())
-    })
-    .catch(err=>console.log(err.response.data.message))
-  }
 
   // si loading true et tableau user vide retourne null
   
@@ -71,7 +76,12 @@ const ListUser = (props) => {
         <td>{user.user_password}</td>
         <td>{user.user_role}</td>
         
-        <td><Button value="update" action={()=>getUser(user.id)} /></td>
+        <td>
+          {/* <Button value="update" action={()=>getUser(user.id)} /> */}
+          <ShowByPermission can={role}>
+            <Button value="update" action={()=>getUser(user.id)} />
+          </ShowByPermission>
+        </td>
         
       </tr>
   )))
@@ -83,7 +93,7 @@ const ListUser = (props) => {
   return (
     <div>
        <h2>List of User</h2>
-      {showUserList ? <TableBody showUserList={showUserList} openModal={openModal} /> : <h3>Loading ....</h3>}
+      {showUserList ? <TableBody role={role} showUserList={showUserList} openModal={openModal} /> : <h3>Loading ....</h3>}
      
     </div>
   )

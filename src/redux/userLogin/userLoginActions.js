@@ -3,7 +3,7 @@ import {
   FIRE_LOGIN_REQUEST,
   FIRE_LOGIN_SUCCESS
 } from './userLoginTypes';
-import axios from 'axios';
+import { axiosBase  } from '../../helpers/axiosBase'
 
 // do  request to the api
 export const fireLoginRequest = ()=>{
@@ -33,8 +33,8 @@ export const fireLoginFailure = (errorMsg)=>{
 
 export const fireLogin = (dataWithProps)=>{
   return (dispatch)=>{
-    dispatch(fireLoginRequest);
-    axios.post('http://localhost:4000/login',dataWithProps.user)
+    dispatch(fireLoginRequest());
+    axiosBase.post('/login',dataWithProps.user)
     .then( success=>{
       const token = success.data.token
       dispatch(fireLoginSuccess(success))
@@ -44,11 +44,11 @@ export const fireLogin = (dataWithProps)=>{
       window.localStorage.setItem('token',token)
       // save user logged name
       window.localStorage.setItem('userLogged',userLogged)
-      dataWithProps.props.history.push('/dashboard/presence')
+      dataWithProps.props.history.push('/dashboard')
       console.log('login succefully')
     })
     .catch(error=>{
-      console.log(error.response)
+     console.log(error)
     dispatch(fireLoginFailure(error.response.data))
     })
   }
