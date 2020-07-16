@@ -5,6 +5,7 @@ import { fireLogin } from '../../redux';
 import Button from '../SousComponents/Button';
 
 
+
 const custom = {
   padding: '0px 5px',
   border: '1px solid red',
@@ -33,7 +34,7 @@ export class Login extends Component {
   }
 
 componentDidMount() {
- 
+
   const token = window.localStorage.getItem('token')
   if(token){
     // console.log('token available')
