@@ -8,8 +8,8 @@ const custom = {
 }
 const Error = (props) => {
   return (
-    <div style={custom}>
-      <span>{props.error}</span>
+    <div className="alert alert-danger">
+       {props.success}
     </div>
   )
 }

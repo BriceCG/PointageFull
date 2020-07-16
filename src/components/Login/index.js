@@ -16,13 +16,14 @@ const custom = {
 const Message = (props)=>{
   if(props.error){
     return(
-      <div style={custom}>
-        <h3>{props.error.message}</h3>
-      </div>
+      <div className="alert alert-danger" style={{width: '80%'}}>
+      {props.error.message}
+   </div>
     )
   }
   return null
 }
+
 
 export class Login extends Component {
   state = {
@@ -72,30 +73,43 @@ componentDidMount() {
     ? 
     <Button type="submit" value='login' />
     :
-    <Button disabled={true} />
+    <Button disabled={true} value='login' />
 
 
     return (
-      <div>
         
-        <h1>Login</h1>
-        <hr />
-        <div>
-          <Message  error={userLogin.errorMsg} />
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <input type="text" onChange={this.handleChange} placeholder="username" id="user_username"  value={user_username}  />
-            </div>
-            <div>
-              <input type="password" onChange={this.handleChange} placeholder="password" id="user_password" value={user_password} />
-            </div>
-            
-          { userLogin.loading ? 'loading ...' : showBtn}
-           
+    <div className="container-fluid">
+    <div className="container-login">
+      <div className="item1">
     
-          </form>
-        </div>
       </div>
+      <div className="item2">
+  
+          <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
+          <Message  error={userLogin.errorMsg} />
+              <div className="form-group">
+                <label className="control-label col-sm-2" for="username">Username:</label>
+                <div className="col-sm-10">
+                  <input type="text"  onChange={this.handleChange}  className="form-control"  placeholder="username" id="user_username" value={user_username}  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="control-label col-sm-2" for="pwd">Password:</label>
+                <div className="col-sm-10">
+                  <input type="password" className="form-control" onChange={this.handleChange} placeholder="password" id="user_password" value={user_password} />
+                </div>
+              </div>
+              <div className="form-group">
+                <div className="col-sm-offset-2 col-sm-10">
+                  {/* <button type="submit" 
+                ">SIGN UP</button> */}
+                  { userLogin.loading ? 'loading ...' : showBtn}
+                </div>
+              </div>
+            </form>
+      </div>
+    </div>
+    </div>
     )
   }
 }
@@ -114,3 +128,7 @@ const mapDispatchToPrps = (dispatch)=>{
 }
 
 export default connect(mapStateToProps,mapDispatchToPrps)(Login)
+
+
+
+

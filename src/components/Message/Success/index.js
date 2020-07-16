@@ -11,6 +11,7 @@ const Success = (props) => {
   return (
     <div style={custom}>
       <span>{props.success}</span>
+     
     </div>
   )
 }
