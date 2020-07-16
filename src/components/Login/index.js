@@ -106,6 +106,13 @@ componentDidMount() {
                   { userLogin.loading ? 'loading ...' : showBtn}
                 </div>
               </div>
+              <div className="checkbox" style={{marginLeft: '15px'}}>
+                <label><input type="checkbox" value=""/>Se souvenir de moi</label>
+                
+              </div>
+              <div style={{marginLeft: '15px'}}>
+                <a href="#">Mot de passe oublié</a>
+              </div>
             </form>
       </div>
     </div>
