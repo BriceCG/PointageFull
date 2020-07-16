@@ -4,6 +4,7 @@ const User = require('../Models/User')
 const findOne = require('../middleware/modelFunc').findOne
 const inDataBase = require('../middleware/inDataBase').inDatabase
 const { Op } = require('sequelize')
+let generator = require('generate-password');
 
 
 const { needRole, needAuth } = require('../middleware/auth')
@@ -11,6 +12,13 @@ const { needRole, needAuth } = require('../middleware/auth')
 router.post('/user', require('../middleware/validation').validateUser(), async (req, res) => {
     const { user_username, user_password, user_role, user_etat } = req.body
     const user_departement_id = req.body.user_departement_id || null
+
+    //Verification de la longeur du mot de passe
+    user_password = user_password.toLowerCase()
+    user_password = user_password.split(" ").join("")
+    if (user_password.length < 6) {
+        return res.status(400).send({ message: "Le mot de passe ne doit pas etre inferieur a 6 caracteres" })
+    }
 
     //Verification si le nom d utilisateur est deja utilise
     const options = {
@@ -37,9 +45,9 @@ router.post('/user', require('../middleware/validation').validateUser(), async (
         return res.status(400).send({ message: "Erreur de sauvgarde", status: "erreur" })
     }
 })
-router.get('/users',async (req, res) => {
+router.get('/users', async (req, res) => {
     let users = await User.findAll()
-   
+
     if (users) {
         return res.status(200).send({ users, status: "success" })
     }
@@ -108,22 +116,32 @@ router.put('/user/:id', require('../middleware/validation').validateUser(), asyn
 router.get('/me/users', needAuth(), needRole('chef'), async (req, res) => {
     const user = req.decoded
     let users = await User.findAll({
-        attributes: ['id','user_username','user_role','user_etat'],
+        attributes: ['id', 'user_username', 'user_role', 'user_etat'],
         where: {
-            [Op.and]:{
+            [Op.and]: {
                 user_departement_id: user.user_departement_id,
-                [Op.not]:{
+                [Op.not]: {
                     id: req.decoded.user_id
                 }
             }
         }
     })
     if (users) {
-        return res.status(200).send({users,status: "success"})
+        return res.status(200).send({ users, status: "success" })
     }
-    else{
-        return res.status(400).send({message:"Utilisateurs non trouvees",status:"erreur"})
+    else {
+        return res.status(400).send({ message: "Utilisateurs non trouvees", status: "erreur" })
     }
+})
+
+router.get('/generatePassword', async (req, res) => {
+    
+    var password = generator.generate({
+        length: 20,
+        numbers: true
+    })
+    console.log(password)
+    return res.status(200).send({status: "success",password:password})
 })
 
 module.exports = router

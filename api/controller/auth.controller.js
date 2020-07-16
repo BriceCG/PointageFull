@@ -8,7 +8,10 @@ const { needAuth } = require('../middleware/auth')
 
 router.post('/login',require('../middleware/validation').authValidation(),async(req,res)=>{
     const {user_username,user_password} = req.body
+    
+
     //Trouver l utilisateur correspondant
+
     let existingUser = await User.findOne({
         attributes: ['id','user_username','user_role','user_etat','user_departement_id','user_password'],
         where:{

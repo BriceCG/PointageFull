@@ -48,6 +48,7 @@ export const fireLogin = (dataWithProps)=>{
       console.log('login succefully')
     })
     .catch(error=>{
+      console.log(error.response)
     dispatch(fireLoginFailure(error.response.data))
     })
   }
