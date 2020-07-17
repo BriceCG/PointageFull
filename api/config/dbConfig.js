@@ -1,12 +1,4 @@
 module.exports = {
-    HOST: "localhost",
-
-    USER: "root",
-
-    PASSWORD: "",
-
-    DB: "api_pointage",
-
     dialect: "mysql",
 
     pool: {
