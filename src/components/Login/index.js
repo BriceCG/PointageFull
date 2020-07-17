@@ -16,7 +16,7 @@ const custom = {
 const Message = (props)=>{
   if(props.error){
     return(
-      <div className="alert alert-danger" style={{width: '80%'}}>
+      <div className="alert alert-danger" style={{width: '100%'}}>
       {props.error.message}
    </div>
     )
@@ -84,7 +84,7 @@ componentDidMount() {
     
       </div>
       <div className="item2">
-  
+      
           <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
           <Message  error={userLogin.errorMsg} />
               <div className="form-group">
