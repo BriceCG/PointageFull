@@ -19,6 +19,7 @@ export class Presence extends Component {
     return (
       <div>
         <h1>Presence</h1>
+   
         <hr />
         <div>
           <ListPresence/>

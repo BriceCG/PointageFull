@@ -88,19 +88,19 @@ componentDidMount() {
           <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
           <Message  error={userLogin.errorMsg} />
               <div className="form-group">
-                <label className="control-label col-sm-2" for="username">Username:</label>
-                <div className="col-sm-10">
+                <label className="control-label col-sm-12" for="username">Username:</label>
+                <div className="col-sm-12">
                   <input type="text"  onChange={this.handleChange}  className="form-control"  placeholder="username" id="user_username" value={user_username}  />
                 </div>
               </div>
               <div className="form-group">
-                <label className="control-label col-sm-2" for="pwd">Password:</label>
-                <div className="col-sm-10">
+                <label className="control-label col-sm-12" for="pwd">Password:</label>
+                <div className="col-sm-12">
                   <input type="password" className="form-control" onChange={this.handleChange} placeholder="password" id="user_password" value={user_password} />
                 </div>
               </div>
               <div className="form-group">
-                <div className="col-sm-offset-2 col-sm-10">
+                <div className=" col-sm-12">
                   {/* <button type="submit" 
                 ">SIGN UP</button> */}
                   { userLogin.loading ? 'loading ...' : showBtn}
