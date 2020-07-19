@@ -79,7 +79,7 @@ componentDidMount() {
 
     return (
         
-    <div className="container-fluid">
+    <div className="container-fluid mainLogin">
     <div className="container-login">
       <div className="item1">
     
@@ -89,13 +89,13 @@ componentDidMount() {
           <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
           <Message  error={userLogin.errorMsg} />
               <div className="form-group">
-                <label className="control-label col-sm-12" for="username">Username:</label>
+                <label className="control-label col-sm-12" htmlFor="username">Username:</label>
                 <div className="col-sm-12">
                   <input type="text"  onChange={this.handleChange}  className="form-control"  placeholder="username" id="user_username" value={user_username}  />
                 </div>
               </div>
               <div className="form-group">
-                <label className="control-label col-sm-12" for="pwd">Password:</label>
+                <label className="control-label col-sm-12" htmlFor="pwd">Password:</label>
                 <div className="col-sm-12">
                   <input type="password" className="form-control" onChange={this.handleChange} placeholder="password" id="user_password" value={user_password} />
                 </div>
@@ -104,7 +104,9 @@ componentDidMount() {
                 <div className=" col-sm-12">
                   {/* <button type="submit" 
                 ">SIGN UP</button> */}
+
                   { userLogin.loading ? 'loading ...' : showBtn}
+
                 </div>
               </div>
               <div className="checkbox" style={{marginLeft: '15px'}}>

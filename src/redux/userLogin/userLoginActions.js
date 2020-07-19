@@ -33,9 +33,12 @@ export const fireLoginFailure = (errorMsg)=>{
 
 export const fireLogin = (dataWithProps)=>{
   return (dispatch)=>{
+    console.log("request")
     dispatch(fireLoginRequest());
+    console.log(" end request")
     axiosBase.post('/login',dataWithProps.user)
     .then( success=>{
+      console.log("success")
       const token = success.data.token
       dispatch(fireLoginSuccess(success))
       

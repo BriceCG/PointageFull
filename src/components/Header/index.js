@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import logo  from '../../assets/img/logo.png'
 import axios from 'axios'
 
 const Header = ({redirect}) => {
@@ -34,37 +35,43 @@ const Header = ({redirect}) => {
 
 
   return (
-    <header style={custom.header}>
+    // <header style={custom.header}>
   
-        <Link to="/dashboard/presence">
-          <div>
-            presence
-          </div>
-        </Link>
-        <Link to="/dashboard">
-          <div>create</div>
-        </Link>
-        <div>
-          <button onClick={logOut}>Log out {userLogged} </button>
-        </div>
+    //     
+    //       <div>
+    //         presence
+    //       </div>
+    //     </Link>
+    //     <Link to="/dashboard">
+    //       <div>create</div>
+    //     </Link>
+    //     <div>
+    //       <button onClick={logOut}>Log out {userLogged} </button>
+    //     </div>
      
+    // </header>
+    <header style={{display:'flex',padding: '10px 10px ',justifyContent:'space-between'}}>
+      <Link to="/profile" style={{color: "white",textDecoration: 'none'}} className="headerLink">
+      <div className="username headerLink" >
+        LAINGONIAINA Rheada
+      </div>
+      </Link>
+      <Link to="/our-logo" className="headerLink">
+      <div className="ourLogo headerLink">
+        <img src={ logo } className="ourLogo"/>
+      </div>
+      </Link>
+      <Link to="/entreprise-logo" className="headerLink">
+      <div className="entrepriseLog headerLink" >
+        <img src={ logo } className="ourLogo"/>
+      </div>
+      </Link>
     </header>
+    
   )
 }
 
-const custom=  {
-  header: {
-    display:'flex',
-    background: 'skyblue',
-    border: '2px solid black',
-    width: '100%',
-    justifyContent: 'space-between',
-    color: 'white',
-    padding: '10px'
 
-  },
- 
-}
 
 export default Header
 

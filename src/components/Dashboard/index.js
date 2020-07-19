@@ -15,14 +15,14 @@ export class Dashboard extends Component {
   render() {
     return (
       <Router>
-        <div className="dashboard_main">
+       
         <Header  redirect={this.props}/>
+        <div className="container-fluid">
         <Switch>
           <Route path="/dashboard/presence" component={ Presence } />
           <Route path="/dashboard" component={ CrudApi } />
           <Route component={ Page404 } />
         </Switch>
-      
         </div>
       </Router>
     )
