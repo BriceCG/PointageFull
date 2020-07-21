@@ -48,7 +48,7 @@ export const fireLogin = (dataWithProps)=>{
       // save user logged name
       window.localStorage.setItem('userLogged',userLogged)
       dataWithProps.props.history.push('/dashboard')
-      console.log('login succefully')
+      // console.log('login succefully')
     })
     .catch(error=>{
      console.log(error)

@@ -20,10 +20,10 @@ export class Dashboard extends Component {
         <Header  redirect={this.props}/>
         <div className="container-fluid">
         <Switch>
-          <Route exact path="/dashboard" component={ CrudApi } />
+          <Route exact path="/dashboard/d" component={ CrudApi } />
           <Route path="/dashboard/presence" component={ Presence } />
           
-          <Route path="/dashboard/home" component={ Home } />
+          <Route path="/dashboard" component={ Home } />
           <Route component={ Page404 } />
         </Switch>
         </div>
