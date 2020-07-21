@@ -62,8 +62,8 @@ const Header = ({redirect}) => {
       </div>
       </Link>
       <Link to="/entreprise-logo" className="headerLink">
-      <div className="entrepriseLog headerLink" >
-        <img src={ logo } className="ourLogo"/>
+      <div className="entrepriseLog headerLink"  >
+          <img src={ logo } className="ourLogo" />
       </div>
       </Link>
     </header>

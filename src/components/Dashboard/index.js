@@ -4,6 +4,7 @@ import { BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import Page404 from '../404';
 import CrudApi from '../CrudApi'
 import Presence from '../Presence';
+import Home from '../Home';
 export class Dashboard extends Component {
   // componentDidMount(){
     
@@ -19,8 +20,10 @@ export class Dashboard extends Component {
         <Header  redirect={this.props}/>
         <div className="container-fluid">
         <Switch>
+          <Route exact path="/dashboard" component={ CrudApi } />
           <Route path="/dashboard/presence" component={ Presence } />
-          <Route path="/dashboard" component={ CrudApi } />
+          
+          <Route path="/dashboard/home" component={ Home } />
           <Route component={ Page404 } />
         </Switch>
         </div>
