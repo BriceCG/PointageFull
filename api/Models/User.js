@@ -1,5 +1,8 @@
 const {sequelize,Sequelize} = require('./model')
 const User = sequelize.define("pt_user", {
+    user_email:{
+        type:Sequelize.STRING,
+    },
     user_username: {
         type: Sequelize.STRING,
         allowNull: false,
