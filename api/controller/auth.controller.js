@@ -8,7 +8,7 @@ const { needAuth } = require('../middleware/auth')
 
 router.post('/login',require('../middleware/validation').authValidation(),async(req,res)=>{
     const {user_username,user_password} = req.body
-    
+        
 
     //Trouver l utilisateur correspondant
 

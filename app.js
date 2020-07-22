@@ -43,8 +43,9 @@ app.use('', require('./api/controller/user.controller'))
 app.use('', require('./api/controller/auth.controller'))
 app.use('', require('./api/controller/presence.controller'))
 app.use('', require('./api/controller/mail.controller'))
+app.use('',require('./api/controller/recuperation.controller'))
 // app.use('/api-doc',swaggerUi.serve,swaggerUi.setup(swaggerDocument))
 
 app.listen(PORT,HOST, () => {
-    console.log('Serveur connecte au http://localhost:' + PORT)
+    console.log('Serveur connecte au http://'+HOST+':'+ PORT)
 })
