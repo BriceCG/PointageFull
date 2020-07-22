@@ -5,6 +5,8 @@ import Page404 from '../404';
 import CrudApi from '../CrudApi'
 import Presence from '../Presence';
 import Home from '../Home';
+import ViewPresence from '../ViewPresence';
+
 export class Dashboard extends Component {
   // componentDidMount(){
     
@@ -13,20 +15,22 @@ export class Dashboard extends Component {
   //   }
   // }
   
+  
   render() {
     return (
       <Router>
-       
         <Header  redirect={this.props}/>
-        <div className="container-fluid">
+        {/* <div className="container-fluid"> */}
         <Switch>
           <Route exact path="/dashboard/d" component={ CrudApi } />
           <Route path="/dashboard/presence" component={ Presence } />
-          
-          <Route path="/dashboard" component={ Home } />
+
+       
+          <Route path="/dashboard/view-presence-and-cumuls" component={ ViewPresence }/>
+          <Route path="/dashboard" exact component={ Home } />
           <Route component={ Page404 } />
         </Switch>
-        </div>
+        {/* </div> */}
       </Router>
     )
   }

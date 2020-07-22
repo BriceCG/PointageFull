@@ -1,6 +1,9 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 
 const Home = () => {
+  useEffect(() => {
+    document.body.style.background="#ebebeb";
+  }, [])
   return (
     <div className="container" style={{marginTop: '50px'}}>
       <div className="mainAside">

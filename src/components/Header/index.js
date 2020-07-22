@@ -50,7 +50,7 @@ const Header = ({redirect}) => {
     //     </div>
      
     // </header>
-    <header style={{display:'flex',padding: '10px 10px ',justifyContent:'space-between'}}>
+    <header style={{display:'flex',padding: '10px 10px ',justifyContent:'space-between'}} className="headerHome">
       <Link to="/profile" style={{color: "white",textDecoration: 'none'}} className="headerLink">
       <div className="username headerLink" >
         LAINGONIAINA Rheada
