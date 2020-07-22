@@ -60,5 +60,19 @@ module.exports = {
                 next()
             }
         }
+    },
+    societeValidation: ()=>{
+        return (req,res,next)=>{
+            let {societe_raison_social,societe_adresse_email} = req.body
+            if (!societe_raison_social){
+                return res.status(400).send({message:"Raison social ne doit pas etre vide"})
+            }
+            else if (!societe_adresse_email){
+                return res.status(400).send({message:"Email ne doit pas etre vide"})
+            }
+            else{
+                next()
+            }
+        }
     }
 }
