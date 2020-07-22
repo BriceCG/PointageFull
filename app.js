@@ -44,6 +44,7 @@ app.use('', require('./api/controller/auth.controller'))
 app.use('', require('./api/controller/presence.controller'))
 app.use('', require('./api/controller/mail.controller'))
 app.use('',require('./api/controller/recuperation.controller'))
+app.use('',require('./api/controller/societe.controller'))
 // app.use('/api-doc',swaggerUi.serve,swaggerUi.setup(swaggerDocument))
 
 app.listen(PORT,HOST, () => {

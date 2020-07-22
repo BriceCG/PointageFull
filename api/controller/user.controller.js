@@ -67,7 +67,7 @@ router.post('/user', require('../middleware/validation').validateUser(), async (
             }
         })
         .catch(err => {
-            res.status(400).send({ err })
+            res.status(400).send({ message:err,status:"erreur" })
         })
 
 })
