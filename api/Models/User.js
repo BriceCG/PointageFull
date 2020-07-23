@@ -51,6 +51,9 @@ const User = sequelize.define("pt_user", {
     },
     user_poste:{
         type: Sequelize.INTEGER
+    },
+    user_societe:{
+        type:Sequelize.INTEGER
     }
 
 },{

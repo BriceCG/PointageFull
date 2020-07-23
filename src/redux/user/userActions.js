@@ -11,6 +11,7 @@ import {
 } from './userTypes';
 
 import axios from 'axios';
+import {axiosBase} from '../../helpers/axiosBase/index.js'
 
 export const fetchUserRequest = ()=>{
   return{
@@ -35,7 +36,7 @@ export const fetchUserFailure = (error)=>{
 export const fetchUser = ()=>{
   return (dispatch)=>{
     dispatch(fetchUserRequest)
-    axios.get('http://localhost:4000/users')
+    axiosBase.get('/users')
     .then(response=>{
       const users = response.data;
       dispatch(fetchUserSuccess(users))
