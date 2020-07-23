@@ -2,9 +2,11 @@ const {Sequelize,sequelize} = require('./model')
 const Societe = sequelize.define("pt_societe",{
     societe_raison_social:{
         type:Sequelize.STRING,
-        allowNull:false
     },
     societe_siret:{
+        type:Sequelize.STRING
+    },
+    societe_siren:{
         type:Sequelize.STRING
     },
     societe_iban:{
@@ -75,6 +77,9 @@ const Societe = sequelize.define("pt_societe",{
     },
     societe_slogan:{
         type:Sequelize.STRING
+    },
+    societe_user_admin:{
+        type:Sequelize.INTEGER
     }
 },{
     timestamps:false
