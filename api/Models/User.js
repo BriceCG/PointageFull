@@ -5,7 +5,6 @@ const User = sequelize.define("pt_user", {
     },
     user_username: {
         type: Sequelize.STRING,
-        allowNull: false,
     },
     user_password: {
         type: Sequelize.STRING,

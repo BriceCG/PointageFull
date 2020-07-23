@@ -7,11 +7,21 @@ const { verifyMail } = require('../service/mailService')
 
 //Middleware 
 const { societeValidation } = require('../middleware/validation')
+const User = require('../Models/User')
 
 router.post('/societe', societeValidation(), async (req, res) => {
     const societe = req.body
-    const { societe_adresse_email } = req.body
+    //Recherche de l utilisateur en cours
+    const user = req.decoded
+    let existingUser = await User.findOne({
+        where:{
+            user_email:user.user_email
+        }
+    })
+    
+
     societe.societe_date_creation = Date.now()
+    societe.societe_user_admin = existingUser.id
     const saveSociete = await Societe.create(societe)
     //Si sauvegarde reussi
     if (saveSociete) {
