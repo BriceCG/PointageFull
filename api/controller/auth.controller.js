@@ -66,19 +66,30 @@ router.post('/signUp', validateSignUp(), async (req, res) => {
         return res.status(400).send({ message: "Le mot de passe ne doit pas etre inferieur a 6 caracteres" })
     }
 
-    //Verification si le nom d utilisateur est deja utilise
-    let existingUser = await User.findOne({
+    //Verification si l email est deja utilise
+    let existingUser
+    existingUser = await User.findOne({
         where: {
-            [Op.or]:{
-                user_email,
-                user_username
-            }
-            
+            user_email
         }
     })
     if (existingUser) {
-        return res.status(400).send({ message: "Utilisateur deja dans la base de donne", status: "erreur" })
+        return res.status(400).send({ message: "L'email est deja utilisee", status: "erreur" })
     }
+     //Verification si le nom d utilisateur est deja utilise
+     if (user_username){
+        existingUser = await User.findOne({
+            where: {
+                user_username
+            }
+        })
+       
+     }
+     if (existingUser){
+        return res.status(400).send({ message: "Le nom d' utiliateur est deja utilise", status: "erreur" })
+     }
+    
+
     //Hash du mot de passe
     let hashPassword = await bcrypt.hash(user_password, 10)
     req.body.user_password = hashPassword
@@ -94,7 +105,6 @@ router.post('/signUp', validateSignUp(), async (req, res) => {
     else {
         return res.status(400).send({ message: "Erreur de sauvgarde", status: "erreur" })
     }
-
 })
 
 module.exports = router

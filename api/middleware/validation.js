@@ -35,7 +35,7 @@ module.exports = {
     },
     validateSignUp: ()=>{
         return  (req,res,next)=>{
-            const {user_nom,user_prenom,user_email,user_password} = req.body
+            const {user_nom,user_prenom,user_email,user_password,user_username} = req.body
             if (!user_nom) {
                 return res.status(400).send({ message:"Nom vide", status: "erreur" })
             }
@@ -44,11 +44,11 @@ module.exports = {
             }
              if (!user_email) {
                 return res.status(400).send({ message:"Email vide", status: "erreur" })
-            }
-            
+            } 
              if (!user_password) {
                 return res.status(400).send({ message:"Mot de passe vide", status: "erreur" })
             }
+            
             else{
                 next()
             }
