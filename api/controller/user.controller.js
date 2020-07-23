@@ -60,10 +60,8 @@ router.post('/user', require('../middleware/validation').validateUser(), async (
     else {
         return res.status(400).send({ message: "Erreur de sauvgarde", status: "erreur" })
     }
-
-
-
 })
+
 router.get('/users', async (req, res) => {
     let users = await User.findAll()
 
