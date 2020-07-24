@@ -6,7 +6,6 @@ import Page404 from './components/404';
 import CrudApi from './components/CrudApi';
 import Create from './components/Create';
 import Dashboard from './components/Dashboard'
-import Val from './components/ValidationForm/validation';
 import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
@@ -17,7 +16,6 @@ const App = () => {
         <Route exact path="/" component={ Login } />
         <Route path="/create" component={ CrudApi } />
         <PrivateRoute path="/dashboard" component={ Dashboard } />
-        <Route path="/valid" component={ Val } />
         <Route component={ Page404 } />
       </Switch>
     </Router>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ListPresence from './ListPresence';
 import { fetchPresence } from '../../redux'
 import { connect } from 'react-redux'
-import axios from 'axios'
+
 
 
 export class Presence extends Component {

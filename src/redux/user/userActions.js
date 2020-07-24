@@ -10,7 +10,7 @@ import {
   CREATE_USER_SUCCESS
 } from './userTypes';
 
-import axios from 'axios';
+import {axiosBase} from '../../helpers/axiosBase'
 
 export const fetchUserRequest = ()=>{
   return{
@@ -35,7 +35,7 @@ export const fetchUserFailure = (error)=>{
 export const fetchUser = ()=>{
   return (dispatch)=>{
     dispatch(fetchUserRequest)
-    axios.get('http://localhost:4000/users')
+    axiosBase.get('/users')
     .then(response=>{
       const users = response.data;
       dispatch(fetchUserSuccess(users))
@@ -75,7 +75,7 @@ export const createUserFailure = errorMsg=>{
 export const createUser = (user)=>{
   return (dispatch)=>{
     dispatch(createUserRequest)
-    axios.post('http://localhost:4000/user',user)
+    axiosBase.post('/user',user)
       .then( success=>{
         const successMsg = success.data
         dispatch(createUserSuccess(successMsg))
