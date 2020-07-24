@@ -93,13 +93,18 @@ router.post('/signUp', validateSignUp(), async (req, res) => {
     //Hash du mot de passe
     let hashPassword = await bcrypt.hash(user_password, 10)
     req.body.user_password = hashPassword
+    req.body.user_role = "admin"
     let saveUser = await User.create(req.body)
 
-    const token = await jwt.sign({
-        user_email
-    },require('../config/jwtConfig').secret)
+   
     //Sauvegarde de l utilisateur
     if (saveUser) {
+        console.log(saveUser)
+        const token = await jwt.sign({
+            user_email,
+            user_id:saveUser.id,
+            user_role:saveUser.user_role
+        },require('../config/jwtConfig').secret)
         return res.status(200).send({ message: "User sauvgardee", status: "success",token:token })
     }
     else {
