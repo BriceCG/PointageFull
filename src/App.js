@@ -4,7 +4,6 @@ import { BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import Login from './components/Login';
 import Page404 from './components/404';
 import CrudApi from './components/CrudApi';
-import Create from './components/Create';
 import Dashboard from './components/Dashboard'
 import PrivateRoute from './components/PrivateRoute';
 
