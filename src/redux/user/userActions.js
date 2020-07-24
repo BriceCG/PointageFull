@@ -10,7 +10,8 @@ import {
   CREATE_USER_SUCCESS
 } from './userTypes';
 
-import {axiosBase} from '../../helpers/axiosBase'
+import axios from 'axios';
+import {axiosBase} from '../../helpers/axiosBase/index.js'
 
 export const fetchUserRequest = ()=>{
   return{
