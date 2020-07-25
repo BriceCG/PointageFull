@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `pt_demandes`
 --
-USE pointage;
+
 CREATE TABLE `pt_demandes` (
   `id` int(11) NOT NULL,
   `demande_date` datetime NOT NULL,
