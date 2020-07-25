@@ -9,6 +9,7 @@
     "concurrently": "^5.2.0",
     "cors": "^2.8.5",
     "cra-template": "1.0.3",
+    "dhtmlx-scheduler": "^5.3.9",
     "dotenv": "^8.2.0",
     "email-verifier": "^0.4.1",
     "express": "^4.17.1",

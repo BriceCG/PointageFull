@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import CalendarDash from '../HeaderDashboard/CalendarDash'
-import EquipeLink from '../HeaderDashboard/EquipeLink'
+import Scheduler from './Scheduler'
+import EquipeLink from './EquipeLink'
 
 export class MainDashboard extends Component {
   render() {
@@ -8,7 +8,7 @@ export class MainDashboard extends Component {
       <div className="container-fluid main_content_dash">
         <div className="child_content_main row">
           
-        <CalendarDash />
+        <Scheduler />
 
         <EquipeLink />
         </div>

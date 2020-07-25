@@ -1,10 +1,13 @@
 import React,{useEffect} from 'react'
+import Header from '../Header';
 
 const Home = () => {
   useEffect(() => {
     document.body.style.background="#ebebeb";
   }, [])
-  return (
+  return (<>
+
+<Header />
     <div className="container" style={{marginTop: '50px'}}>
       <div className="mainAside">
         <div className="aside1">
@@ -96,6 +99,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+  </>
   )
 }
 
