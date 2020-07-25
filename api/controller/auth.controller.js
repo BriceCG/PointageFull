@@ -20,7 +20,7 @@ router.post('/login', require('../middleware/validation').authValidation(), asyn
     //Trouver l utilisateur correspondant
 
     let existingUser = await User.findOne({
-        attributes: ['id', 'user_username', 'user_role', 'user_etat', 'user_departement_id', 'user_password'],
+        attributes: ['id', 'user_username', 'user_role', 'user_etat', 'user_password'],
         where: {
             [Op.or]:{
                 user_username: user_username,
@@ -42,8 +42,7 @@ router.post('/login', require('../middleware/validation').authValidation(), asyn
             user_id: existingUser.id,
             user_username: existingUser.user_username,
             user_role: existingUser.user_role,
-            user_etat: existingUser.user_etat,
-            user_departement_id: existingUser.user_departement_id
+            user_etat: existingUser.user_etat
         }, require('../config/jwtConfig').secret)
 
         return res.status(200).send({ message: "Login reussi", status: "success", token, user_username, user_role: existingUser.user_role })
@@ -99,7 +98,6 @@ router.post('/signUp', validateSignUp(), async (req, res) => {
    
     //Sauvegarde de l utilisateur
     if (saveUser) {
-        console.log(saveUser)
         const token = await jwt.sign({
             user_email,
             user_id:saveUser.id,

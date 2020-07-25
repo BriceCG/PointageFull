@@ -14,9 +14,6 @@ const User = sequelize.define("pt_user", {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    user_departement_id: {
-        type: Sequelize.INTEGER
-    },
     user_etat:{
         type: Sequelize.STRING
     },
@@ -53,7 +50,11 @@ const User = sequelize.define("pt_user", {
     },
     user_societe:{
         type:Sequelize.INTEGER
-    }
+    },
+    user_service:{
+        type:Sequelize.INTEGER
+    },
+
 
 },{
     timestamps:false

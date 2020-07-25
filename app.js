@@ -38,6 +38,8 @@ const HOST = process.env.NODE_HOST
 //     }
 // })
 
+
+
 app.use('', require('./api/controller/departement.controller'))
 app.use('', require('./api/controller/user.controller'))
 app.use('', require('./api/controller/auth.controller'))
