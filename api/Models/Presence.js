@@ -4,11 +4,7 @@ const Presence = sequelize.define('pt_presence',{
     presence_date:{
         type: Sequelize.DATE,
     },
-    pt_user_user_id_presence:{
-        type: Sequelize.INTEGER,
-        allowNull:true
-    },
-    pt_departement_departement_id_presence:{
+    presence_user:{
         type: Sequelize.INTEGER,
         allowNull:true
     },

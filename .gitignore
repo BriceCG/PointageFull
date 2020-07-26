@@ -1,5 +1,6 @@
 node_modules
 planning.md
-.env
+*.env
 build 
 prod.js
+.test

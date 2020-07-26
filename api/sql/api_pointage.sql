@@ -1,9 +1,10 @@
+
 -- phpMyAdmin SQL Dump
 -- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Jeu 23 Juillet 2020 à 16:07
+-- Généré le :  Sam 25 Juillet 2020 à 16:26
 -- Version du serveur :  5.7.30-0ubuntu0.18.04.1
 -- Version de PHP :  7.2.24-0ubuntu0.18.04.6
 
@@ -17,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `pointage`
+-- Base de données :  `api_pointage_test`
 --
 
 -- --------------------------------------------------------
@@ -25,27 +26,27 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `pt_demandes`
 --
-USE pointage;
+
 CREATE TABLE `pt_demandes` (
   `id` int(11) NOT NULL,
   `demande_date` datetime NOT NULL,
-  `pt_user_user_id` int(11) DEFAULT NULL,
-  `pt_departement_departement_id` int(11) DEFAULT NULL,
   `demande_etat` varchar(45) NOT NULL,
   `demande_intervalle` varchar(45) DEFAULT NULL,
-  `demande_motif` varchar(45) NOT NULL
+  `demande_motif` varchar(45) NOT NULL,
+  `demande_user` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `pt_departements`
+-- Structure de la table `pt_postes`
 --
 
-CREATE TABLE `pt_departements` (
+CREATE TABLE `pt_postes` (
   `id` int(11) NOT NULL,
-  `departement_nom` varchar(255) NOT NULL,
-  `departement_chef_id` int(11) DEFAULT NULL
+  `poste_libelle` varchar(45) NOT NULL,
+  `poste_obsolete` varchar(45) DEFAULT NULL,
+  `pt_societes_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -56,10 +57,30 @@ CREATE TABLE `pt_departements` (
 
 CREATE TABLE `pt_presences` (
   `id` int(11) NOT NULL,
-  `presence_date` datetime NOT NULL,
-  `pt_user_user_id_presence` int(11) DEFAULT NULL,
-  `pt_departement_departement_id_presence` int(11) DEFAULT NULL,
-  `presence_type` varchar(45) NOT NULL
+  `presence_date` date NOT NULL,
+  `presence_type` varchar(45) NOT NULL,
+  `presence_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `pt_presences`
+--
+
+INSERT INTO `pt_presences` (`id`, `presence_date`, `presence_type`, `presence_user`) VALUES
+(14, '2020-07-25', 'present', 8),
+(15, '2020-07-25', 'present', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pt_profiles`
+--
+
+CREATE TABLE `pt_profiles` (
+  `id` int(11) NOT NULL,
+  `profile_libelle` varchar(45) DEFAULT NULL,
+  `profile_obsolete` varchar(45) DEFAULT NULL,
+  `profile_societe` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -71,8 +92,35 @@ CREATE TABLE `pt_presences` (
 CREATE TABLE `pt_recuperations` (
   `id` int(11) NOT NULL,
   `recup_token` varchar(255) DEFAULT NULL,
-  `recup_user` int(11) NOT NULL,
-  `recup_etat` varchar(45) DEFAULT NULL
+  `recup_etat` varchar(45) DEFAULT NULL,
+  `recup_user` int(11) DEFAULT NULL,
+  `recup_societe` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pt_responsabilites`
+--
+
+CREATE TABLE `pt_responsabilites` (
+  `id` int(11) NOT NULL,
+  `responsabilite_libelle` varchar(45) NOT NULL,
+  `responsabilite_obsolete` varchar(45) DEFAULT NULL,
+  `responsabilite_societe` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pt_services`
+--
+
+CREATE TABLE `pt_services` (
+  `id` int(11) NOT NULL,
+  `service_libelle` varchar(255) NOT NULL,
+  `service_societe` int(11) NOT NULL,
+  `service_obsolete` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -108,16 +156,8 @@ CREATE TABLE `pt_societes` (
   `societe_document` varchar(45) DEFAULT NULL,
   `societe_logo` varchar(45) DEFAULT NULL,
   `societe_slogan` varchar(45) DEFAULT NULL,
-  `societe_iban` varchar(45) DEFAULT NULL,
-  `societe_user_admin` int(11) NOT NULL
+  `societe_iban` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `pt_societes`
---
-
-INSERT INTO `pt_societes` (`id`, `societe_raison_social`, `societe_siret`, `societe_siren`, `societe_adresse_numerique`, `societe_adresse_voie`, `societe_adresse_complement`, `societe_code_postal`, `societe_nom_contact`, `societe_responsabilite_contact`, `societe_telephone_fixe`, `societe_telephone_mobile`, `societe_adresse_email`, `societe_effectif`, `societe_activite`, `societe_zone_geographique`, `societe_departement`, `socite_actif`, `societe_ville`, `societe_date_creation`, `societe_date_contrat`, `societe_date_rupture`, `societe_commentaire`, `societe_document`, `societe_logo`, `societe_slogan`, `societe_iban`, `societe_user_admin`) VALUES
-(1, 'Informatique', 'test', 'test', 'Anosizato', 'test', 'test', '101', 'test', 'test', '0222222', '465464', 'ehtmwrnvjgdimcrivn@awdrt.net', '45', 'test', 'france', 'test', 'oui', 'Paris', '2020-07-23 13:58:02', NULL, NULL, 'test', 'test', 'test', 'test', 'test', 8);
 
 -- --------------------------------------------------------
 
@@ -130,28 +170,31 @@ CREATE TABLE `pt_users` (
   `user_username` varchar(255) DEFAULT NULL,
   `user_password` varchar(255) NOT NULL,
   `user_role` varchar(255) NOT NULL,
-  `user_departement_id` int(11) DEFAULT NULL,
   `user_etat` varchar(45) DEFAULT NULL,
   `user_email` varchar(45) DEFAULT NULL,
-  `user_societe` int(11) DEFAULT NULL,
   `user_nom` varchar(45) NOT NULL,
   `user_prenom` varchar(45) NOT NULL,
   `user_date_naissance` date DEFAULT NULL,
   `user_date_creation` datetime DEFAULT NULL,
-  `user_date_embauche` varchar(45) DEFAULT NULL,
+  `user_date_embauche` datetime DEFAULT NULL,
   `user_addresse_num` varchar(45) DEFAULT NULL,
   `user_addresse_voie` varchar(45) DEFAULT NULL,
   `user_addresse_complement` varchar(45) DEFAULT NULL,
   `user_ville` varchar(45) DEFAULT NULL,
-  `user_poste` varchar(45) DEFAULT NULL
+  `user_societe` int(11) DEFAULT NULL,
+  `user_service` int(11) DEFAULT NULL,
+  `user_responsabilite` int(11) DEFAULT NULL,
+  `user_poste` int(11) DEFAULT NULL,
+  `user_profile` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `pt_users`
 --
 
-INSERT INTO `pt_users` (`id`, `user_username`, `user_password`, `user_role`, `user_departement_id`, `user_etat`, `user_email`, `user_societe`, `user_nom`, `user_prenom`, `user_date_naissance`, `user_date_creation`, `user_date_embauche`, `user_addresse_num`, `user_addresse_voie`, `user_addresse_complement`, `user_ville`, `user_poste`) VALUES
-(8, 'Brice', '$2b$10$2KLQgceKOlslSagQ/XpKg.b8clmYIXkwyVVfFEaRvlmuS/H0nE1be', 'admin', NULL, NULL, 'briceainarivonyraharijaona@gmail.com', NULL, 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `pt_users` (`id`, `user_username`, `user_password`, `user_role`, `user_etat`, `user_email`, `user_nom`, `user_prenom`, `user_date_naissance`, `user_date_creation`, `user_date_embauche`, `user_addresse_num`, `user_addresse_voie`, `user_addresse_complement`, `user_ville`, `user_societe`, `user_service`, `user_responsabilite`, `user_poste`, `user_profile`) VALUES
+(8, 'Brice1', '$2b$10$ymcqDE6l.BcjDLNi1nTSlOzO6EI5Rp1gkqPmFi0Pud0UIl4hBDFqC', 'admin', NULL, 'briceainarivonyraharijaona1@gmail.com', 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'Brice', '$2b$10$zHusItSlpMWRgUkxR4XAXeRLe/pxezdeLabQ9sLpPm.fisESHwbqi', 'admin', NULL, 'briceainarivonyraharijaona@gmail.com', 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Index pour les tables exportées
@@ -162,75 +205,112 @@ INSERT INTO `pt_users` (`id`, `user_username`, `user_password`, `user_role`, `us
 --
 ALTER TABLE `pt_demandes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pt_demande_pt_user1_idx` (`pt_user_user_id`),
-  ADD KEY `fk_pt_demande_pt_departement1_idx` (`pt_departement_departement_id`);
+  ADD KEY `fk_pt_demandes_pt_users1_idx` (`demande_user`);
 
 --
--- Index pour la table `pt_departements`
+-- Index pour la table `pt_postes`
 --
-ALTER TABLE `pt_departements`
+ALTER TABLE `pt_postes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pt_departement_pt_user1_idx` (`departement_chef_id`);
+  ADD KEY `fk_pt_postes_pt_societes1_idx` (`pt_societes_id`);
 
 --
 -- Index pour la table `pt_presences`
 --
 ALTER TABLE `pt_presences`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pt_presence_pt_user1_idx` (`pt_user_user_id_presence`),
-  ADD KEY `fk_pt_presence_pt_departement1_idx` (`pt_departement_departement_id_presence`);
+  ADD KEY `fk_pt_presences_pt_users1_idx` (`presence_user`);
+
+--
+-- Index pour la table `pt_profiles`
+--
+ALTER TABLE `pt_profiles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pt_profiles_pt_societes1_idx` (`profile_societe`);
 
 --
 -- Index pour la table `pt_recuperations`
 --
 ALTER TABLE `pt_recuperations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pt_recuperation_pt_users1_idx` (`recup_user`);
+  ADD KEY `fk_pt_recuperations_pt_users1_idx` (`recup_user`),
+  ADD KEY `fk_pt_recuperations_pt_societes1_idx` (`recup_societe`);
+
+--
+-- Index pour la table `pt_responsabilites`
+--
+ALTER TABLE `pt_responsabilites`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pt_responsabilites_pt_societes1_idx` (`responsabilite_societe`);
+
+--
+-- Index pour la table `pt_services`
+--
+ALTER TABLE `pt_services`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pt_services_pt_societes1_idx` (`service_societe`);
 
 --
 -- Index pour la table `pt_societes`
 --
 ALTER TABLE `pt_societes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pt_societes_pt_users1_idx` (`societe_user_admin`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `pt_users`
 --
 ALTER TABLE `pt_users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pt_user_pt_departement1_idx` (`user_departement_id`),
-  ADD KEY `fk_pt_users_pt_societes1_idx` (`user_societe`);
+  ADD KEY `fk_pt_users_pt_societes_idx` (`user_societe`),
+  ADD KEY `fk_pt_users_pt_services1_idx` (`user_service`),
+  ADD KEY `fk_pt_users_pt_responsabilites1_idx` (`user_responsabilite`),
+  ADD KEY `fk_pt_users_pt_postes1_idx` (`user_poste`),
+  ADD KEY `fk_pt_users_pt_profiles1_idx` (`user_profile`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
 --
 
 --
--- AUTO_INCREMENT pour la table `pt_departements`
+-- AUTO_INCREMENT pour la table `pt_postes`
 --
-ALTER TABLE `pt_departements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `pt_postes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `pt_presences`
 --
 ALTER TABLE `pt_presences`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT pour la table `pt_profiles`
+--
+ALTER TABLE `pt_profiles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `pt_recuperations`
 --
 ALTER TABLE `pt_recuperations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT pour la table `pt_responsabilites`
+--
+ALTER TABLE `pt_responsabilites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `pt_services`
+--
+ALTER TABLE `pt_services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT pour la table `pt_societes`
 --
 ALTER TABLE `pt_societes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `pt_users`
 --
 ALTER TABLE `pt_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Contraintes pour les tables exportées
 --
@@ -239,40 +319,54 @@ ALTER TABLE `pt_users`
 -- Contraintes pour la table `pt_demandes`
 --
 ALTER TABLE `pt_demandes`
-  ADD CONSTRAINT `fk_pt_demande_pt_departement1` FOREIGN KEY (`pt_departement_departement_id`) REFERENCES `pt_departements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_pt_demande_pt_user1` FOREIGN KEY (`pt_user_user_id`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_pt_demandes_pt_users1` FOREIGN KEY (`demande_user`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `pt_departements`
+-- Contraintes pour la table `pt_postes`
 --
-ALTER TABLE `pt_departements`
-  ADD CONSTRAINT `fk_pt_departement_pt_user1` FOREIGN KEY (`departement_chef_id`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `pt_postes`
+  ADD CONSTRAINT `fk_pt_postes_pt_societes1` FOREIGN KEY (`pt_societes_id`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `pt_presences`
 --
 ALTER TABLE `pt_presences`
-  ADD CONSTRAINT `fk_pt_presence_pt_departement1` FOREIGN KEY (`pt_departement_departement_id_presence`) REFERENCES `pt_departements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_pt_presence_pt_user1` FOREIGN KEY (`pt_user_user_id_presence`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_pt_presences_pt_users1` FOREIGN KEY (`presence_user`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `pt_profiles`
+--
+ALTER TABLE `pt_profiles`
+  ADD CONSTRAINT `fk_pt_profiles_pt_societes1` FOREIGN KEY (`profile_societe`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `pt_recuperations`
 --
 ALTER TABLE `pt_recuperations`
-  ADD CONSTRAINT `fk_pt_recuperation_pt_users1` FOREIGN KEY (`recup_user`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_pt_recuperations_pt_societes1` FOREIGN KEY (`recup_societe`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pt_recuperations_pt_users1` FOREIGN KEY (`recup_user`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `pt_societes`
+-- Contraintes pour la table `pt_responsabilites`
 --
-ALTER TABLE `pt_societes`
-  ADD CONSTRAINT `fk_pt_societes_pt_users1` FOREIGN KEY (`societe_user_admin`) REFERENCES `pt_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `pt_responsabilites`
+  ADD CONSTRAINT `fk_pt_responsabilites_pt_societes1` FOREIGN KEY (`responsabilite_societe`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `pt_services`
+--
+ALTER TABLE `pt_services`
+  ADD CONSTRAINT `fk_pt_services_pt_societes1` FOREIGN KEY (`service_societe`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `pt_users`
 --
 ALTER TABLE `pt_users`
-  ADD CONSTRAINT `fk_pt_user_pt_departement1` FOREIGN KEY (`user_departement_id`) REFERENCES `pt_departements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_pt_users_pt_societes1` FOREIGN KEY (`user_societe`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_pt_users_pt_postes1` FOREIGN KEY (`user_poste`) REFERENCES `pt_postes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pt_users_pt_profiles1` FOREIGN KEY (`user_profile`) REFERENCES `pt_profiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pt_users_pt_responsabilites1` FOREIGN KEY (`user_responsabilite`) REFERENCES `pt_responsabilites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pt_users_pt_services1` FOREIGN KEY (`user_service`) REFERENCES `pt_services` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pt_users_pt_societes` FOREIGN KEY (`user_societe`) REFERENCES `pt_societes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
