@@ -32,7 +32,6 @@ router.post('/login', require('../middleware/validation').authValidation(), asyn
     if (!existingUser) {
         return res.status(400).send({ message: "Utilisateur non trouvee", status: "erreur" })
     }
-    console.log(user_password)
     //Si l utilisateur est dans la base de donne
     //Verifier si le mot de passe correspond
     let samePassword = await bcrypt.compare(user_password, existingUser.user_password)

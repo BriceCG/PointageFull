@@ -3,6 +3,7 @@ const Presence = require('../Models/Presence')
 const {Op} = require('sequelize')
 const {QueryTypes} = require('sequelize')
 const sequelize = require('../Models/model').sequelize
+const moment = require('moment')
 
 //middleware
 const {needAuth,needRole,needSameDepChef} = require('../middleware/auth')
@@ -11,18 +12,40 @@ const {presenceValidation} = require('../middleware/validation')
 
 
 router.post('/presence',needAuth(),presenceValidation(),async(req,res)=>{
-    const {presence_type} = req.body;
+    const {presence_type,presence_start_date,presence_end_date} = req.body;
+    let user = req.decoded
     //Verifie si il a deja fait la presence aujourd hui
-    let query = `SELECT * FROM pt_presences pp WHERE DAY (NOW() ) = DAY (presence_date ) AND presence_user = ${req.decoded.user_id}`
-    let presenceDay = await sequelize.query(query, { type: QueryTypes.SELECT })
-    if (presenceDay.length > 0){
-        return res.status(400).send({message:"Vous avez deja fait la presence journaliere"})
+    // let query = `SELECT * FROM pt_presences pp WHERE DAY (NOW() ) = DAY (presence_date ) AND presence_user = ${req.decoded.user_id}`
+    // let presenceDay = await sequelize.query(query, { type: QueryTypes.SELECT })
+    // if (presenceDay.length > 0){
+    //     return res.status(400).send({message:"Vous avez deja fait la presence journaliere"})
+    // }
+    let existingDate = await Presence.findOne({
+        where: {
+            [Op.and]:{
+                presence_start_date: presence_start_date,
+                presence_user: req.decoded.user_id
+            }
+           
+        }
+    })
+    if (existingDate){
+      await  Presence.update({
+           presence_start_date,
+           presence_end_date,
+           presence_type
+        },{
+            where:{
+                    id: existingDate.id
+            }
+        })
+        return res.status(200).send({message:"Date mis a jour",status:"success"})
     }
-
-
+    
     
     const savePresence = await Presence.create({
-        presence_date: new Date(),
+        presence_start_date: presence_start_date,
+        presence_end_date: presence_end_date,
         presence_type: presence_type,
         presence_user: req.decoded.user_id,
     })
@@ -38,7 +61,7 @@ router.post('/presence',needAuth(),presenceValidation(),async(req,res)=>{
 router.get('/presences/me',needAuth(),async(req,res)=>{
     const user = req.decoded
     let presences = await Presence.findAll({
-        attributes: ['id',['presence_date','date'],['presence_type','title']],
+        attributes: ['id',"presence_start_date","presence_end_date",['presence_type','title']],
         where:{
             presence_user: user.user_id
         }

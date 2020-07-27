@@ -4,7 +4,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Sam 25 Juillet 2020 à 16:26
+-- Généré le :  Lun 27 Juillet 2020 à 15:14
 -- Version du serveur :  5.7.30-0ubuntu0.18.04.1
 -- Version de PHP :  7.2.24-0ubuntu0.18.04.6
 
@@ -57,18 +57,29 @@ CREATE TABLE `pt_postes` (
 
 CREATE TABLE `pt_presences` (
   `id` int(11) NOT NULL,
-  `presence_date` date NOT NULL,
+  `presence_start_date` datetime DEFAULT NULL,
   `presence_type` varchar(45) NOT NULL,
-  `presence_user` int(11) DEFAULT NULL
+  `presence_user` int(11) DEFAULT NULL,
+  `presence_end_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `pt_presences`
 --
 
-INSERT INTO `pt_presences` (`id`, `presence_date`, `presence_type`, `presence_user`) VALUES
-(14, '2020-07-25', 'present', 8),
-(15, '2020-07-25', 'present', 9);
+INSERT INTO `pt_presences` (`id`, `presence_start_date`, `presence_type`, `presence_user`, `presence_end_date`) VALUES
+(11, '2020-07-02 07:00:00', 'present', 8, '2020-07-02 15:00:00'),
+(12, '2020-07-03 07:00:00', 'present', 8, '2020-07-03 15:00:00'),
+(13, '2020-07-04 07:00:00', 'present', 8, '2020-07-04 15:00:00'),
+(14, '2020-07-05 07:00:00', 'absent', 8, '2020-07-05 15:00:00'),
+(15, '2020-07-07 07:00:00', 'present', 8, '2020-07-07 15:00:00'),
+(16, '2020-07-08 07:00:00', 'present', 8, '2020-07-08 15:00:00'),
+(17, '2020-07-09 07:00:00', 'absent', 8, '2020-07-09 15:00:00'),
+(18, '2020-07-10 07:00:00', 'present', 8, '2020-07-10 15:00:00'),
+(19, '2020-07-02 07:00:00', 'present', 9, '2020-07-02 15:00:00'),
+(20, '2020-07-03 07:00:00', 'present', 9, '2020-07-03 15:00:00'),
+(21, '2020-07-04 07:00:00', 'present', 9, '2020-07-04 15:00:00'),
+(22, '2020-07-05 07:00:00', 'absent', 9, '2020-07-05 15:00:00');
 
 -- --------------------------------------------------------
 
@@ -193,8 +204,8 @@ CREATE TABLE `pt_users` (
 --
 
 INSERT INTO `pt_users` (`id`, `user_username`, `user_password`, `user_role`, `user_etat`, `user_email`, `user_nom`, `user_prenom`, `user_date_naissance`, `user_date_creation`, `user_date_embauche`, `user_addresse_num`, `user_addresse_voie`, `user_addresse_complement`, `user_ville`, `user_societe`, `user_service`, `user_responsabilite`, `user_poste`, `user_profile`) VALUES
-(8, 'Brice1', '$2b$10$ymcqDE6l.BcjDLNi1nTSlOzO6EI5Rp1gkqPmFi0Pud0UIl4hBDFqC', 'admin', NULL, 'briceainarivonyraharijaona1@gmail.com', 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, 'Brice', '$2b$10$zHusItSlpMWRgUkxR4XAXeRLe/pxezdeLabQ9sLpPm.fisESHwbqi', 'admin', NULL, 'briceainarivonyraharijaona@gmail.com', 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(8, 'Brice', '$2b$10$gHwQ.9f9grD9SKWlrq04ReNEdfVK2ICx3aF5Nizm9DEbMrt8Nx0jW', 'admin', NULL, 'briceainarivonyraharijaona@gmail.com', 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'Brice1', '$2b$10$TtclANOObMMcMHt.fOeDF.nT7ffNHqkwMyfdy89efdSFV3DObHeQW', 'admin', NULL, 'briceainarivonyraharijaona1@gmail.com', 'Raharijaona', 'Brice', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Index pour les tables exportées
@@ -280,7 +291,7 @@ ALTER TABLE `pt_postes`
 -- AUTO_INCREMENT pour la table `pt_presences`
 --
 ALTER TABLE `pt_presences`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT pour la table `pt_profiles`
 --
@@ -300,7 +311,7 @@ ALTER TABLE `pt_responsabilites`
 -- AUTO_INCREMENT pour la table `pt_services`
 --
 ALTER TABLE `pt_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `pt_societes`
 --
