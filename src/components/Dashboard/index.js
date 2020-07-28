@@ -23,8 +23,8 @@ export class Dashboard extends Component {
       <Router>
         
         {/* <Header  redirect={this.props}/> */}
-        <div className="main_dash" >
-        <HeaderDashboard />
+        {/* <div className="main_dash" >
+        <HeaderDashboard /> */}
         <Switch>
           <Route exact path="/dashboard/d" component={ CrudApi } />
           <Route path="/dashboard/presence" component={ Presence } />
@@ -40,7 +40,7 @@ export class Dashboard extends Component {
 
           <Route component={ Page404 } />
         </Switch>
-        </div>
+        {/* </div> */}
       </Router>
     )
   }
