@@ -89,4 +89,32 @@ router.get('/presences/user/:id',needAuth(),needRole('DRH')|| needRole('chef'),n
         
     }
 })
+
+router.put('/presence/:id',needAuth(),async(req,res)=>{
+    let existingPresence = await Presence.findOne({
+        where:{
+           [Op.and]:{
+            id: req.params.id ,
+            presence_user: req.decoded.user_id
+           }
+        }
+    })
+    if (!existingPresence){
+        return res.status(400).send({message: "Presence non trouvee",status:"erreur"})
+    }
+    let updatePresence = await Presence.update(
+        req.body
+        ,{
+        where:{
+            id:req.params.id
+        }
+    })
+    if (updatePresence){
+        return res.status(200).send({message:"Presence mis a jour",status:"success"})
+    }
+    else{
+        return res.status(400).send({message:"Erreur de mis a jour",status:"erreur"})
+    }
+
+})
 module.exports = router
